@@ -61,7 +61,7 @@ class Server implements ServerInterface
         try {
             $methodCall = $this->impl->createMethodCall($request);
             $methodResponse = $this->_handle($methodCall);
-            $exceptionStatus = self::HTTP_SUCCESS_STATUS;
+            $exceptionStatus = Response::HTTP_OK;
         } catch (\Exception $e) {
 
             // log exception
@@ -70,7 +70,7 @@ class Server implements ServerInterface
             }
 
             $methodResponse = new MethodFault($e);
-            $exceptionStatus = method_exists($e, 'getHttpStatusCode') ? $e->getHttpStatusCode() : Implementation::BAD_REQUEST_STATUS_CODE;
+            $exceptionStatus = method_exists($e, 'getHttpStatusCode') ? $e->getHttpStatusCode() : Response::HTTP_BAD_REQUEST;
         }
         return $this->impl->createHttpResponse($methodResponse, $exceptionStatus);
     }
