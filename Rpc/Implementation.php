@@ -19,11 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 // @codeCoverageIgnoreStart
 abstract class Implementation
 {
-
-    const ERROR_STATUS_CODE = 500;
-    const BAD_REQUEST_STATUS_CODE = 400;
-    const NON_EXIST_STATUS_CODE = 404;
-
     /**
      * @param  Request $request
      * @return mixed
@@ -44,7 +39,7 @@ abstract class Implementation
      * @return Response
      */
 
-    abstract public function createHttpResponse(MethodResponse $response, $statusCode = Server::HTTP_SUCCESS_STATUS);
+    abstract public function createHttpResponse(MethodResponse $response, $statusCode = Response::HTTP_OK);
 
     /**
      * @param  MethodCall $call

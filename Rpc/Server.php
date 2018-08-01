@@ -25,8 +25,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Server implements ServerInterface
 {
-    const HTTP_SUCCESS_STATUS = 200;
-
     protected $impl;
     protected $handlers;
 

@@ -122,7 +122,7 @@ class Implementation extends BaseImplementation
      * @throws UnknownMethodResponse
      */
 
-    public function createHttpResponse(MethodResponse $response, $statusCode = Server::HTTP_SUCCESS_STATUS)
+    public function createHttpResponse(MethodResponse $response, $statusCode = Response::HTTP_OK)
     {
         $document = new \DOMDocument("1.0", "UTF-8");
         $document->appendChild($responseEl = $document->createElement("methodResponse"));

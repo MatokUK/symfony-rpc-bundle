@@ -13,6 +13,7 @@
 namespace Seven\RpcBundle\Exception;
 
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 
 class RpcException extends Exception
 {
@@ -23,6 +24,19 @@ class RpcException extends Exception
      */
     private $httpStatusCode;
 
+
+    /**
+     * Throw a new exception.
+     *
+     * @param string $message Error message
+     * @param int $code Error code (default = 0)
+     * @param int $httpStatusCode HTTP status code to send
+     */
+    public function __construct($message, $code = 0, $httpStatusCode = Response::HTTP_BAD_REQUEST)
+    {
+        parent::__construct($message, $code);
+        $this->httpStatusCode = $httpStatusCode;
+    }
 
     /**
      * Set additional information about the error.
@@ -61,19 +75,6 @@ class RpcException extends Exception
      */
     public function setHttpStatusCode($httpStatusCode)
     {
-        $this->httpStatusCode = $httpStatusCode;
-    }
-
-    /**
-     * Throw a new exception.
-     *
-     * @param string $message Error message
-     * @param int $code Error code (default = 0)
-     * @param int $httpStatusCode HTTP status code to send (default = 400)
-     */
-    public function __construct($message, $code = 0, $httpStatusCode = 400)
-    {
-        parent::__construct($message, $code);
         $this->httpStatusCode = $httpStatusCode;
     }
 }

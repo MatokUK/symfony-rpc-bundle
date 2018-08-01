@@ -48,17 +48,17 @@ class Implementation extends BaseImplementation
     {
         $content = $request->getContent();
         if (empty($content)) {
-            throw new InvalidJsonRpcContent('The JSON-RPC request is empty', self::ERROR_INVALID_REQUEST, self::BAD_REQUEST_STATUS_CODE);
+            throw new InvalidJsonRpcContent('The JSON-RPC request is empty', self::ERROR_INVALID_REQUEST, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($content, true);
 
         if (is_null($data)) {
-            throw new InvalidJsonRpcContent('The JSON-RPC call is not valid', self::ERROR_PARSING, self::ERROR_STATUS_CODE);
+            throw new InvalidJsonRpcContent('The JSON-RPC call is not valid', self::ERROR_PARSING, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         if (empty($data['jsonrpc']) || version_compare($data['jsonrpc'], '2.0', '<')) {
-            throw new InvalidJsonRpcVersion('The JSON-RPC call version is not supported', self::ERROR_SERVER_ERROR, self::ERROR_INVALID_REQUEST);
+            throw new InvalidJsonRpcVersion('The JSON-RPC call version is not supported', self::ERROR_SERVER_ERROR, Response::HTTP_BAD_REQUEST);
         }
 
         if (empty($data['method']) || !isset($data['params'])) {
@@ -76,7 +76,7 @@ class Implementation extends BaseImplementation
      *
      * @throws UnknownMethodResponse
      */
-    public function createHttpResponse(MethodResponse $response, $statusCode = Server::HTTP_SUCCESS_STATUS)
+    public function createHttpResponse(MethodResponse $response, $statusCode = Response::HTTP_OK)
     {
         $data = array(
             'jsonrpc' => '2.0',
