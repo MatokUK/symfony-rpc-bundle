@@ -150,9 +150,7 @@ class Server implements ServerInterface
         $reflParams = $refl->getParameters();
 
         $paramCount = count($parameters);
-        if (!($paramCount >= $refl->getNumberOfRequiredParameters()
-            && $paramCount <= $refl->getNumberOfParameters())
-        ) {
+        if (!$this->checkPassedParameters($refl, $paramCount)) {
             throw new InvalidParameters(
                 sprintf('Invalid number of parameters. %d given but %d are required of %d total.',
                     $paramCount, $refl->getNumberOfRequiredParameters(), $refl->getNumberOfParameters())
@@ -186,6 +184,15 @@ class Server implements ServerInterface
         }
 
         return $newParams;
+    }
+
+    private function checkPassedParameters(\ReflectionFunctionAbstract $reflection, $paramCount)
+    {
+        if ($reflection->isVariadic()) {
+            return true;
+        }
+
+        return $paramCount >= $reflection->getNumberOfRequiredParameters() && $paramCount <= $reflection->getNumberOfParameters();
     }
 
     /**
