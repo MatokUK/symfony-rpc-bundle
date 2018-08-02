@@ -9,13 +9,13 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\Rpc\Method\MethodFault;
 use Seven\RpcBundle\Rpc\Method\MethodReturn;
 use Seven\RpcBundle\XmlRpc\Implementation;
 use Seven\RpcBundle\Tests\XmlRpc\Asserts\MethodUnknownResponse;
 
-class ImplementationMethodResponseTest extends PHPUnit_Framework_TestCase
+class ImplementationMethodResponseTest extends TestCase
 {
     public function testPackingValueResponse()
     {
@@ -41,7 +41,7 @@ class ImplementationMethodResponseTest extends PHPUnit_Framework_TestCase
 
     public function testPackingUnknownResponse()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\UnknownMethodResponse");
+        $this->expectException("Seven\\RpcBundle\\Exception\\UnknownMethodResponse");
 
         $impl = new Implementation();
         $response = new MethodUnknownResponse();
@@ -52,7 +52,7 @@ class ImplementationMethodResponseTest extends PHPUnit_Framework_TestCase
     {
         $impl = new Implementation();
 
-        $httpResponse = $this->getMock("Symfony\\Component\\HttpFoundation\\Response");
+        $httpResponse = $this->createMock("Symfony\\Component\\HttpFoundation\\Response");
         $httpResponse->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<methodResponse><params><param><value><string>test</string></value></param></params></methodResponse>\n"));
@@ -67,7 +67,7 @@ class ImplementationMethodResponseTest extends PHPUnit_Framework_TestCase
     {
         $impl = new Implementation();
 
-        $httpResponse = $this->getMock("Symfony\\Component\\HttpFoundation\\Response");
+        $httpResponse = $this->createMock("Symfony\\Component\\HttpFoundation\\Response");
         $httpResponse->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<methodResponse><fault><value><struct><member><name>faultCode</name><value><int>4</int></value></member><member><name>faultString</name><value><string>Too many parameters.</string></value></member></struct></value></fault></methodResponse>\n"));
@@ -81,10 +81,10 @@ class ImplementationMethodResponseTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingEmptyResponse()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
         $impl = new Implementation();
 
-        $httpResponse = $this->getMock("Symfony\\Component\\HttpFoundation\\Response");
+        $httpResponse = $this->createMock("Symfony\\Component\\HttpFoundation\\Response");
         $httpResponse->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue(""));
@@ -94,11 +94,11 @@ class ImplementationMethodResponseTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingInvalidResponse()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
 
         $impl = new Implementation();
 
-        $httpResponse = $this->getMock("Symfony\\Component\\HttpFoundation\\Response");
+        $httpResponse = $this->createMock("Symfony\\Component\\HttpFoundation\\Response");
         $httpResponse->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<methodCall><fault /></methodCall>\n"));
@@ -137,7 +137,7 @@ class ImplementationMethodResponseTest extends PHPUnit_Framework_TestCase
 
         $impl = new Implementation();
 
-        $httpResponse = $this->getMock("Symfony\\Component\\HttpFoundation\\Response");
+        $httpResponse = $this->createMock("Symfony\\Component\\HttpFoundation\\Response");
         $httpResponse->expects($this->once())
             ->method('getContent')
             ->will($this->returnValue($responseXml));

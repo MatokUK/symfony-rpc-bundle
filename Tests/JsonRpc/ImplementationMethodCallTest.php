@@ -9,11 +9,11 @@
  */
 
 namespace Seven\RpcBundle\Tests\JsonRpc;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\Rpc\Method\MethodCall;
 use Seven\RpcBundle\JsonRpc\Implementation;
 
-class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
+class ImplementationMethodCallTest extends TestCase
 {
     /**
      * @dataProvider providerRpcCallWithParameters
@@ -29,7 +29,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
         ));
 
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
 
         $requestMock->expects($this->once())
             ->method("getContent")
@@ -54,9 +54,9 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingCallFromEmptyRequest()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidJsonRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidJsonRpcContent");
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue(""));
@@ -66,7 +66,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingCallWithoutMethodName()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidJsonRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidJsonRpcContent");
         $requestJson = json_encode(array(
             'jsonrpc' => '2.0',
             'params'  => array(1, 2, 3),
@@ -74,7 +74,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
         ));
 
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue($requestJson));

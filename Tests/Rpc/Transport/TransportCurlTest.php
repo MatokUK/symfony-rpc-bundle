@@ -6,7 +6,9 @@
 
 namespace Seven\RpcBundle\Tests\Transport;
 
-class TransportCurlTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class TransportCurlTest extends TestCase
 {
     /**
      * @expectedException \Seven\RpcBundle\Rpc\Exception\CurlTransportException
@@ -15,17 +17,15 @@ class TransportCurlTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeRequestWithCurlError($errorCode, $errorMessage)
     {
-        $transportMock = $this->getMock("Seven\\RpcBundle\\Rpc\\Transport\\TransportCurl", array(
-            "getCurlRequest"
-        ));
+        $transportMock = $this->getMockBuilder("Seven\\RpcBundle\\Rpc\\Transport\\TransportCurl")
+                                ->setMethods(array("getCurlRequest"))
+                                ->getMock();
 
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
 
-        $curlRequestMock = $this->getMock("Seven\\RpcBundle\\Rpc\\Transport\\Curl\\CurlRequest", array(
-            "execute",
-            "getErrorNumber",
-            "getErrorMessage"
-        ));
+        $curlRequestMock = $this->getMockBuilder("Seven\\RpcBundle\\Rpc\\Transport\\Curl\\CurlRequest")
+                                ->setMethods(array("execute", "getErrorNumber", "getErrorMessage"))
+                                ->getMock();
 
         $curlRequestMock->expects($this->once())
             ->method('execute')

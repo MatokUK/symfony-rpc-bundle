@@ -11,11 +11,11 @@
 
 namespace Seven\RpcBundle\Tests\XmlRpc;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType;
 use Seven\RpcBundle\XmlRpc\Implementation;
 
-class ImplementationTypeDetectTest extends PHPUnit_Framework_TestCase
+class ImplementationTypeDetectTest extends TestCase
 {
     /** @var Implementation */
     public $impl;

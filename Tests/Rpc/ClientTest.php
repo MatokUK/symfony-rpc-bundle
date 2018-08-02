@@ -10,20 +10,20 @@
 
 namespace Seven\RpcBundle\Tests\Rpc;
 
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\Rpc\Client;
 use Seven\RpcBundle\Rpc\Method\MethodCall;
-use Symfony\Component\HttpFoundation\Request;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
 
     public function testSuccessCall()
     {
-        $implMock = $this->getMock("Seven\\RpcBundle\\Rpc\\Implementation");
-        $transportMock = $this->getMock("Seven\\RpcBundle\\Rpc\\Transport\\TransportInterface");
-        $httpRequestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
-        $httpResponseMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Response");
-        $methodReturnMock = $this->getMock("Seven\\RpcBundle\\Rpc\\Method\\MethodReturn");
+        $implMock = $this->createMock("Seven\\RpcBundle\\Rpc\\Implementation");
+        $transportMock = $this->createMock("Seven\\RpcBundle\\Rpc\\Transport\\TransportInterface");
+        $httpRequestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
+        $httpResponseMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Response");
+        $methodReturnMock = $this->createMock("Seven\\RpcBundle\\Rpc\\Method\\MethodReturn");
 
         $client = new Client("http://webservice.url/path", $implMock, $transportMock);
 

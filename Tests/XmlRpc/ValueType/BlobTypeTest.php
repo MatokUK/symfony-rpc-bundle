@@ -10,14 +10,14 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\BlobType;
 
-class BlobTypeTest extends PHPUnit_Framework_TestCase
+class BlobTypeTest extends TestCase
 {
     public function testPacking()
     {
-        $typeInstance = new BlobType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new BlobType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $domElement = $typeInstance->pack(new \DOMDocument(), "s-t-r-i-n-g");
 
         $this->assertEquals(
@@ -28,7 +28,7 @@ class BlobTypeTest extends PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $typeInstance = new BlobType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new BlobType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $document = new \DOMDocument();
         $document->appendChild($valueEl = $document->createElement('double', base64_encode('s-t-r-i-n-g')));
 

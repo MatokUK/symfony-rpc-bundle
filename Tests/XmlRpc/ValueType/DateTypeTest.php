@@ -10,14 +10,14 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\DateType;
 
-class DateTypeTest extends PHPUnit_Framework_TestCase
+class DateTypeTest extends TestCase
 {
     public function testPacking()
     {
-        $typeInstance = new DateType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new DateType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $domElement = $typeInstance->pack(new \DOMDocument(), new \DateTime("12/31/2010 12:34:50"));
 
         $this->assertEquals(
@@ -28,7 +28,7 @@ class DateTypeTest extends PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $typeInstance = new DateType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new DateType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $document = new \DOMDocument();
         $document->appendChild($valueEl = $document->createElement('dateTime.iso8601', '20101231T12:34:50'));
 

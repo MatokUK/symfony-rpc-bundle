@@ -9,11 +9,11 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\Rpc\Method\MethodCall;
 use Seven\RpcBundle\XmlRpc\Implementation;
 
-class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
+class ImplementationMethodCallTest extends TestCase
 {
 
     public function testExtractingCallWithParameters()
@@ -44,7 +44,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
         ";
 
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue($requestXml));
@@ -64,7 +64,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
         </methodCall>";
 
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue($requestXml));
@@ -77,9 +77,9 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingCallFromEmptyRequest()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue(""));
@@ -89,7 +89,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingCallWithoutMethodName()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
 
         $requestXml = "<?xml version=\"1.0\"?>
         <methodCall>
@@ -103,7 +103,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
         </methodCall>";
 
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue($requestXml));
@@ -113,7 +113,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingCallWithExtraTags()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
 
         $requestXml = "<?xml version=\"1.0\"?>
         <methodCall>
@@ -128,7 +128,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
         </methodCall>";
 
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue($requestXml));
@@ -138,7 +138,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
 
     public function testExtractingCallFromResponseRequest()
     {
-        $this->setExpectedException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
+        $this->expectException("Seven\\RpcBundle\\Exception\\InvalidXmlRpcContent");
 
         $requestXml = "<?xml version=\"1.0\"?>
         <methodResponse>
@@ -151,7 +151,7 @@ class ImplementationMethodCallTest extends PHPUnit_Framework_TestCase
         </methodResponse>";
 
         $impl = new Implementation();
-        $requestMock = $this->getMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
         $requestMock->expects($this->once())
             ->method("getContent")
             ->will($this->returnValue($requestXml));

@@ -10,15 +10,15 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\ArrayType;
 
-class ArrayTypeTest extends PHPUnit_Framework_TestCase
+class ArrayTypeTest extends TestCase
 {
 
     public function testPacking()
     {
-        $implementationMock = $this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
+        $implementationMock = $this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
         $implementationMock->expects($this->any())
             ->method('pack')
             ->will($this->returnCallback(function ($document) {
@@ -42,7 +42,7 @@ class ArrayTypeTest extends PHPUnit_Framework_TestCase
     {
         $sample = array(1, 2, 3, 'abc');
 
-        $implementationMock = $this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
+        $implementationMock = $this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
         $typeInstance = new ArrayType($implementationMock);
 
         $implementationMock->expects($this->any())
