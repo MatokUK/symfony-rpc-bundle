@@ -7,6 +7,7 @@
 namespace Seven\RpcBundle\Tests\Transport;
 
 use PHPUnit\Framework\TestCase;
+use Seven\RpcBundle\Rpc\Transport\RequestInterface;
 
 class TransportCurlTest extends TestCase
 {
@@ -21,7 +22,7 @@ class TransportCurlTest extends TestCase
                                 ->setMethods(array("getCurlRequest"))
                                 ->getMock();
 
-        $requestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
+        $requestMock = $this->createMock(RequestInterface::class);
 
         $curlRequestMock = $this->getMockBuilder("Seven\\RpcBundle\\Rpc\\Transport\\Curl\\CurlRequest")
                                 ->setMethods(array("execute", "getErrorNumber", "getErrorMessage"))

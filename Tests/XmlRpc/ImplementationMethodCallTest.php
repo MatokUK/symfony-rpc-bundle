@@ -176,7 +176,7 @@ class ImplementationMethodCallTest extends TestCase
                 </param>
             </params>
         </methodCall>", $httpRequest->getContent());
-        $this->assertEquals("text/xml", $httpRequest->headers->get('Content-Type'));
+        $this->assertEquals("text/xml", $httpRequest->getContentType());
     }
 
     private function assertXmlValuesEqual($expected, $actual)

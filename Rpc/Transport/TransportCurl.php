@@ -34,12 +34,12 @@ class TransportCurl implements TransportInterface
     }
 
     /**
-     * @param  Request $request
+     * @param  RequestInterface $request
      * @throws CurlTransportException
      * @return Response
      */
 
-    public function makeRequest(Request $request)
+    public function makeRequest(RequestInterface $request)
     {
         $curlRequest = $this->getCurlRequest($request);
 
@@ -55,10 +55,10 @@ class TransportCurl implements TransportInterface
     }
 
     /**
-     * @param Request $request
+     * @param RequestInterface $request
      * @return Curl\CurlRequest
      */
-    public function getCurlRequest(Request $request)
+    public function getCurlRequest(RequestInterface $request)
     {
         $options = $this->prepareOptions($request);
 
@@ -72,7 +72,7 @@ class TransportCurl implements TransportInterface
      * @param Request $request
      * @return array
      */
-    private function prepareOptions(Request $request)
+    private function prepareOptions(RequestInterface $request)
     {
         $options = array(
             CURLOPT_POST => 1,

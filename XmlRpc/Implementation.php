@@ -24,6 +24,7 @@ use Seven\RpcBundle\Rpc\Method\MethodReturn;
 use Seven\RpcBundle\XmlRpc\ValueType\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Seven\RpcBundle\Rpc\Transport\Request as BaseRequest;
 
 class Implementation extends BaseImplementation
 {
@@ -207,10 +208,7 @@ class Implementation extends BaseImplementation
             $paramEl->appendChild($this->pack($document, $parameter));
         }
 
-        $httpRequest = new Request(array(), array(), array(), array(), array(), array(), $document->saveXML());
-        $httpRequest->headers->add(array("content-type" => "text/xml"));
-
-        return $httpRequest;
+        return new BaseRequest($document->saveXML(), 'text/xml');
     }
 
     /**

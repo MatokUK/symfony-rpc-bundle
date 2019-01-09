@@ -11,17 +11,16 @@
 
 namespace Seven\RpcBundle\Rpc\Transport;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 interface TransportInterface
 {
 
     /**
-     * @param  Request  $request
+     * @param  RequestInterface  $request
      * @return Response
      */
 
-    public function makeRequest(Request $request);
+    public function makeRequest(RequestInterface $request);
 
 }

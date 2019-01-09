@@ -93,7 +93,7 @@ class ImplementationMethodCallTest extends TestCase
         $httpRequest = $impl->createHttpRequest($rpcCall);
 
         $this->assertEquals($rawRequestData, $httpRequest->getContent());
-        $this->assertEquals("application/json", $httpRequest->headers->get('Content-Type'));
+        $this->assertEquals("application/json", $httpRequest->getContentType());
     }
 
     public function providerPackingCall()

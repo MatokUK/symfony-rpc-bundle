@@ -13,6 +13,7 @@ namespace Seven\RpcBundle\Tests\Rpc;
 use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\Rpc\Client;
 use Seven\RpcBundle\Rpc\Method\MethodCall;
+use Seven\RpcBundle\Rpc\Transport\RequestInterface;
 
 class ClientTest extends TestCase
 {
@@ -21,7 +22,7 @@ class ClientTest extends TestCase
     {
         $implMock = $this->createMock("Seven\\RpcBundle\\Rpc\\Implementation");
         $transportMock = $this->createMock("Seven\\RpcBundle\\Rpc\\Transport\\TransportInterface");
-        $httpRequestMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Request");
+        $httpRequestMock = $this->createMock(RequestInterface::class);
         $httpResponseMock = $this->createMock("Symfony\\Component\\HttpFoundation\\Response");
         $methodReturnMock = $this->createMock("Seven\\RpcBundle\\Rpc\\Method\\MethodReturn");
 

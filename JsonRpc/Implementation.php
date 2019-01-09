@@ -24,8 +24,10 @@ use Seven\RpcBundle\Rpc\Method\MethodCall;
 use Seven\RpcBundle\Rpc\Method\MethodFault;
 use Seven\RpcBundle\Rpc\Method\MethodResponse;
 use Seven\RpcBundle\Rpc\Method\MethodReturn;
+use Seven\RpcBundle\Rpc\Transport\RequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Seven\RpcBundle\Rpc\Transport\Request as BaseRequest;
 
 class Implementation extends BaseImplementation
 {
@@ -170,7 +172,7 @@ class Implementation extends BaseImplementation
     /**
      * @param MethodCall $call
      *
-     * @return Request
+     * @return RequestInterface
      */
     public function createHttpRequest(MethodCall $call)
     {
@@ -184,9 +186,6 @@ class Implementation extends BaseImplementation
             $data['id'] = $call->getCallId();
         }
 
-        $httpRequest = new Request(array(), array(), array(), array(), array(), array(), json_encode($data));
-        $httpRequest->headers->add(array('content-type' => 'application/json'));
-
-        return $httpRequest;
+        return new BaseRequest(json_encode($data), 'application/json');
     }
 }
