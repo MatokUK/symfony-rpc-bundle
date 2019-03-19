@@ -16,6 +16,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Seven\RpcBundle\Exception\InvalidParameters;
 use Seven\RpcBundle\Exception\MethodNotExists;
+use Seven\RpcBundle\Exception\RpcException;
 use Seven\RpcBundle\Rpc\Method\MethodCall;
 use Seven\RpcBundle\Rpc\Method\MethodFault;
 use Seven\RpcBundle\Rpc\Method\MethodResponse;
@@ -61,14 +62,10 @@ class Server implements ServerInterface
         try {
             $methodCall = $this->impl->createMethodCall($request);
             $methodResponse = $this->_handle($methodCall);
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
+            $this->handleLogging($exception);
 
-            // log exception
-            if (null !== $this->logger) {
-                $this->logger->error($e);
-            }
-
-            $methodResponse = new MethodFault($e);
+            $methodResponse = new MethodFault($exception);
         }
 
         return $this->impl->createHttpResponse($methodResponse);
@@ -251,5 +248,17 @@ class Server implements ServerInterface
         unset($this->handlers[$name]);
 
         return $this;
+    }
+
+    /**
+     * @param Exception $exception
+     */
+    private function handleLogging(Exception $exception)
+    {
+        if (null === $this->logger || ($exception instanceof RpcException && !$exception->isLoggable())) {
+            return;
+        }
+
+        $this->logger->error($exception);
     }
 }

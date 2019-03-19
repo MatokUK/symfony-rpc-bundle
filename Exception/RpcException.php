@@ -16,7 +16,14 @@ use Exception;
 
 class RpcException extends Exception
 {
+    /**
+     * @var string
+     */
     private $data;
+    /**
+     * @var bool
+     */
+    private $loggable = true;
 
     /**
      * Set additional information about the error.
@@ -36,5 +43,21 @@ class RpcException extends Exception
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoggable()
+    {
+        return $this->loggable;
+    }
+
+    /**
+     * @param bool $loggable
+     */
+    public function setLoggable($loggable)
+    {
+        $this->loggable = $loggable;
     }
 }
