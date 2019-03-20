@@ -10,14 +10,14 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\BooleanType;
 
-class BooleanTypeTest extends PHPUnit_Framework_TestCase
+class BooleanTypeTest extends TestCase
 {
     public function testPacking()
     {
-        $typeInstance = new BooleanType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new BooleanType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $domElement = $typeInstance->pack(new \DOMDocument(), true);
 
         $this->assertEquals(
@@ -28,7 +28,7 @@ class BooleanTypeTest extends PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $typeInstance = new BooleanType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new BooleanType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $document = new \DOMDocument();
         $document->appendChild($valueEl = $document->createElement('boolean', 1));
 

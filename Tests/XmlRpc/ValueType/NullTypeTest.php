@@ -9,14 +9,14 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\NullType;
 
-class NullTypeTest extends PHPUnit_Framework_TestCase
+class NullTypeTest extends TestCase
 {
     public function testPacking()
     {
-        $typeInstance = new NullType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new NullType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $domElement = $typeInstance->pack(new \DOMDocument(), NULL);
 
         $this->assertEquals(
@@ -27,7 +27,7 @@ class NullTypeTest extends PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $typeInstance = new NullType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new NullType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $document = new \DOMDocument();
         $document->appendChild($valueEl = $document->createElement('nil'));
 

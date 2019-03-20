@@ -10,10 +10,10 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\ObjectType;
 
-class ObjectTypeTest extends PHPUnit_Framework_TestCase
+class ObjectTypeTest extends TestCase
 {
     public function testPacking()
     {
@@ -35,7 +35,7 @@ class ObjectTypeTest extends PHPUnit_Framework_TestCase
 
     public function getValueFactoryMock()
     {
-        $valueFactoryMock = $this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
+        $valueFactoryMock = $this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
         $valueFactoryMock->expects($this->any())
             ->method('pack')
             ->will($this->returnCallback(function ($document, $value) {
@@ -63,7 +63,7 @@ class ObjectTypeTest extends PHPUnit_Framework_TestCase
     {
         $sample = array('prop_a' => 'value_a', 'prop_b' => 'value_b');
 
-        $implementationMock = $this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
+        $implementationMock = $this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation");
         $typeInstance = new ObjectType($implementationMock);
 
         $implementationMock->expects($this->any())

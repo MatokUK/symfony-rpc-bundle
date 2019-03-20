@@ -10,14 +10,14 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\StringType;
 
-class StringTypeTest extends PHPUnit_Framework_TestCase
+class StringTypeTest extends TestCase
 {
     public function testPacking()
     {
-        $typeInstance = new StringType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new StringType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $domElement = $typeInstance->pack(new \DOMDocument(), "s-t-r-i-n-g & string");
 
         $this->assertEquals(
@@ -28,7 +28,7 @@ class StringTypeTest extends PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $typeInstance = new StringType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new StringType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $document = new \DOMDocument();
         $valueEl = $document->createElement('string');
         $valueElText = $document->createTextNode("s-t-r-i-n-g & string");

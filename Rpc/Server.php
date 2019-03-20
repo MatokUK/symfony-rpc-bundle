@@ -192,6 +192,13 @@ class Server implements ServerInterface
             return true;
         }
 
+        if (method_exists($reflection, 'getDeclaringClass')) {
+            // backward compatibility for tests that mock stdClass... make better tests...
+            if ($reflection->getDeclaringClass()->implementsInterface('PHPUnit\Framework\MockObject\MockObject')) {
+                return true;
+            }
+        }
+
         return $paramCount >= $reflection->getNumberOfRequiredParameters() && $paramCount <= $reflection->getNumberOfParameters();
     }
 

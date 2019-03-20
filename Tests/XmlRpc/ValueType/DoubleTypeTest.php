@@ -10,14 +10,14 @@
  */
 
 namespace Seven\RpcBundle\Tests\XmlRpc\ValueType;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Seven\RpcBundle\XmlRpc\ValueType\DoubleType;
 
-class DoubleTypeTest extends PHPUnit_Framework_TestCase
+class DoubleTypeTest extends TestCase
 {
     public function testPacking()
     {
-        $typeInstance = new DoubleType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new DoubleType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $domElement = $typeInstance->pack(new \DOMDocument(), 12.3);
 
         $this->assertEquals(
@@ -28,7 +28,7 @@ class DoubleTypeTest extends PHPUnit_Framework_TestCase
 
     public function testExtracting()
     {
-        $typeInstance = new DoubleType($this->getMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
+        $typeInstance = new DoubleType($this->createMock("Seven\\RpcBundle\\XmlRpc\\Implementation"));
         $document = new \DOMDocument();
         $document->appendChild($valueEl = $document->createElement('double', 12.3));
 

@@ -13,7 +13,7 @@ namespace Seven\RpcBundle\Tests\Rpc\Asserts;
 class ServerHandler
 {
 
-    public function concat()
+    public function concat(...$params)
     {
         $args = func_get_args();
 
