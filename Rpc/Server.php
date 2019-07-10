@@ -16,6 +16,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Seven\RpcBundle\Exception\InvalidParameters;
 use Seven\RpcBundle\Exception\MethodNotExists;
+use Seven\RpcBundle\Exception\RpcException;
 use Seven\RpcBundle\Rpc\Method\MethodCall;
 use Seven\RpcBundle\Rpc\Method\MethodFault;
 use Seven\RpcBundle\Rpc\Method\MethodResponse;
@@ -62,16 +63,14 @@ class Server implements ServerInterface
             $methodCall = $this->impl->createMethodCall($request);
             $methodResponse = $this->_handle($methodCall);
             $exceptionStatus = Response::HTTP_OK;
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
+            $this->handleLogging($exception);
 
-            // log exception
-            if (null !== $this->logger) {
-                $this->logger->error($e);
-            }
-
-            $methodResponse = new MethodFault($e);
-            $exceptionStatus = method_exists($e, 'getHttpStatusCode') ? $e->getHttpStatusCode() : Response::HTTP_BAD_REQUEST;
+            $methodResponse = new MethodFault($exception);
+            $exceptionStatus = method_exists($exception, 'getHttpStatusCode') ?
+                $exception->getHttpStatusCode() : Response::HTTP_BAD_REQUEST;
         }
+
         return $this->impl->createHttpResponse($methodResponse, $exceptionStatus);
     }
 
@@ -269,5 +268,17 @@ class Server implements ServerInterface
         unset($this->handlers[$name]);
 
         return $this;
+    }
+
+    /**
+     * @param Exception $exception
+     */
+    private function handleLogging(Exception $exception)
+    {
+        if (null === $this->logger || ($exception instanceof RpcException && !$exception->isLoggable())) {
+            return;
+        }
+
+        $this->logger->error($exception);
     }
 }
