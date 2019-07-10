@@ -17,7 +17,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RpcException extends Exception
 {
+    /**
+     * @var string
+     */
     private $data;
+    /**
+     * @var bool
+     */
+    private $loggable = true;
 
     /**
      * @var int
@@ -76,5 +83,21 @@ class RpcException extends Exception
     public function setHttpStatusCode($httpStatusCode)
     {
         $this->httpStatusCode = $httpStatusCode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoggable()
+    {
+        return $this->loggable;
+    }
+
+    /**
+     * @param bool $loggable
+     */
+    public function setLoggable($loggable)
+    {
+        $this->loggable = $loggable;
     }
 }
